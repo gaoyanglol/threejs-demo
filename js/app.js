@@ -20,7 +20,13 @@ function init() {
   camera.position.set(0, 0, 10);
 
   const geometry = new THREE.BoxBufferGeometry(2, 2, 2);
-  const material = new THREE.MeshStandardMaterial({color: 0x800080});
+  const textureLoader = new THREE.TextureLoader();
+  const texture = textureLoader.load('../textures/uv_test_bw.png');
+  
+  texture.encoding = THREE.sRGBEncoding;
+  texture.anisotropy = 16;
+
+  const material = new THREE.MeshStandardMaterial({map: texture});
 
   mesh = new THREE.Mesh(geometry, material);
   scene.add(mesh);

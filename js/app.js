@@ -31,13 +31,15 @@ function init() {
   mesh = new THREE.Mesh(geometry, material);
   scene.add(mesh);
 
-  const light = new THREE.DirectionalLight(0xffffff, 5.0);
+  const light = new THREE.DirectionalLight(0xffffff, 3.0);
   light.position.set(10, 10, 10);
   scene.add(light);
 
   renderer = new THREE.WebGLRenderer({antialias: true});
   renderer.setSize(container.clientWidth, container.clientHeight);
   renderer.setPixelRatio(window.devicePixelRatio);
+  renderer.gammaFactor = 2.2;
+  renderer.gammaOutput = true;
 
   container.appendChild(renderer.domElement);
 

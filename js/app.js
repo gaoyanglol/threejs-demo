@@ -1,7 +1,8 @@
-import * as THREE from './vendor/three/three.js';
+// import * as THREE from './vendor/three/three.js';
 
 let container;
 let camera;
+let controls;
 let renderer;
 let scene;
 let mesh;
@@ -12,6 +13,7 @@ function init() {
   scene.background = new THREE.Color(0x8FBCD4);
 
   createCamera();
+  createControls();
   createLights();
   createMeshes();
   createRenderer();
@@ -29,14 +31,24 @@ function createCamera() {
     0.1, // near clipping plane
     100 // far clipping plane
   );
-  camera.position.set(0, 0, 10);
+  camera.position.set(-4, 4, 10);
+}
+
+function createControls() {
+  controls = new THREE.OrbitControls(camera, container);
 }
 
 function createLights() {
-  const light = new THREE.DirectionalLight(0xffffff, 3.0);
-  light.position.set(10, 10, 10);
+  const ambientLight = new THREE.HemisphereLight(
+    0xddeeff,
+    0x202020,
+    5
+  );
   
-  scene.add(light);
+  const mainLight = new THREE.DirectionalLight(0xffffff, 5);
+  mainLight.position.set(10, 10, 10);
+
+  scene.add(ambientLight, mainLight);
 }
 
 function createMeshes() {
@@ -64,13 +76,13 @@ function createRenderer() {
   renderer.gammaFactor = 2.2;
   renderer.gammaOutput = true;
 
+  renderer.physicallyCorrectLights = true;
+
   container.appendChild(renderer.domElement);
 }
 
 function update() {
-  mesh.rotation.z += 0.01;
-  mesh.rotation.x += 0.01;
-  mesh.rotation.y += 0.01;
+
 }
 
 function render() {
